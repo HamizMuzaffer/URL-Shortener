@@ -1,12 +1,14 @@
 const express = require("express");
-const urlRoute = require("./routes/url")
 const app = express();
-const staticRoute = require("./routes/StaticRouter")
 const path = require("path")
 const PORT = 3001
 const URL = require("./models/url")
 const {connectToMongoDb} = require('./connect')
 
+// Routes 
+const urlRoute = require("./routes/url")
+const staticRoute = require("./routes/StaticRouter")
+const userRoute = require("./routes/user")
 
 
 connectToMongoDb("mongodb://localhost:27017/url-shortener")
@@ -16,6 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use("/url",urlRoute)
 app.use("/",staticRoute)
+app.use("/user",userRoute)
 app.set("view engine", "ejs")
 app.set("views",path.resolve("./views"))
 
@@ -40,13 +43,6 @@ shortId
 res.redirect(URL.urlRedirect)
 
 })
-
-
-
-
-
-
-
 app.listen(PORT,()=>{
     console.log('Server up and Running');
 })
