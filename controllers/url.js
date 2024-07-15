@@ -8,7 +8,8 @@ if(!body.url) return res.status(400).json({error: "No Url or it is incorrect"})
 await URL.create({
     shortId : shortID,
     urlRedirect : body.url,
-    visitHistory : []
+    visitHistory : [],
+    createdBy : req.user._id
 
 })
 
